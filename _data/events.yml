@@ -1,0 +1,8 @@
+# Events shown on the Agenda page, soonest first. Copy the example and remove the "#".
+#
+# - title: Swiss Cyber Storm 2026
+#   date: 2026-10-21
+#   location: Bern
+#   organiser: Swiss Cyber Storm
+#   url: https://www.swisscyberstorm.com/
+#   description: Annual Swiss IT security conference.

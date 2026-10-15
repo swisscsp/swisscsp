@@ -1,0 +1,44 @@
+# Site settings — edit these, then commit. GitHub Pages rebuilds automatically.
+title: Swiss Cyber Security Platform
+description: >-
+  Stay informed, stay secure with the Swiss Cyber Security Platform.
+author: Swiss Cyber Security Platform
+lang: en
+
+# For a project site (https://USER.github.io/REPO/) set baseurl to "/REPO".
+# For a user site (USER.github.io) or a custom domain (swisscsp.ch) leave it "".
+url: "https://swisscsp.github.io"
+baseurl: "/swisscsp"
+
+# Social links
+linkedin_group: https://www.linkedin.com/groups/12791122/
+founder_name: Aleksejs Okolovskis
+founder_linkedin: https://www.linkedin.com/in/aleksejs-okolovskis/
+
+# Forms. GitHub Pages can't process form submissions itself, so the
+# subscribe and contact forms post to an external form service
+# (e.g. https://formspree.io → create a form → paste its endpoint here).
+# While this is empty, the forms are replaced by a link to LinkedIn.
+form_endpoint: ""
+
+# Google Calendar shown on the Calender page
+calendar_embed: "https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FBerlin&title=Swiss%20Cyber%20Security%20Events&showTitle=0&showCalendars=0&showTz=0&src=ODhhZmM5MDQ5YzBiZjRhOGY3MDc0MTAyMDdiMWFlMjYwMjY1MTJhN2FjNmUzNzNmZWQ1NGY0MTk3NjlmM2IwYkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+
+# Blog posts (partners & communities) keep the old GoDaddy addresses
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      permalink: /for-customers/f/:title/
+
+markdown: kramdown
+timezone: Europe/Zurich
+
+exclude:
+  - README.md
+  - serve.sh
+  - Gemfile
+  - Gemfile.lock
+  - vendor

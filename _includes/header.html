@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="header-inner">
+    <nav class="nav nav-left" aria-label="Main">
+      {% for item in site.data.navigation.left %}{% include nav-item.html item=item %}{% endfor %}
+    </nav>
+    <a class="site-title" href="{{ '/' | relative_url }}">
+      <img class="site-logo" src="{{ '/assets/images/logo-header.png' | relative_url }}" alt="" width="40" height="40">
+      <span>{{ site.title }}</span>
+    </a>
+    <nav class="nav nav-right" aria-label="Secondary">
+      {% for item in site.data.navigation.right %}{% include nav-item.html item=item %}{% endfor %}
+    </nav>
+
+    <details class="mobile-menu">
+      <summary aria-label="Menu"><span></span><span></span><span></span></summary>
+      <div class="mobile-panel">
+        {% assign all_items = site.data.navigation.left | concat: site.data.navigation.right %}
+        {% for item in all_items %}
+          {% if item.children %}
+            <p class="mobile-group">{{ item.title }}</p>
+            {% for child in item.children %}<a class="mobile-sub" href="{{ child.url | relative_url }}">{{ child.title }}</a>{% endfor %}
+          {% else %}
+            <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </details>
+  </div>
+</header>

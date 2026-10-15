@@ -1,0 +1,4 @@
+<p class="post-meta">
+  <time datetime="{{ include.post.date | date: '%Y-%m-%d' }}">{{ include.post.date | date: "%-d %B %Y" }}</time>
+  {% if include.post.categories.size > 0 %}<span class="sep" aria-hidden="true">|</span> {{ include.post.categories | join: ", " }}{% endif %}
+</p>

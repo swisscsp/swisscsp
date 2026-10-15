@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if page.title and page.url != "/" %}
+  <title>{{ page.title }} | {{ site.title }}</title>
+  {% else %}
+  <title>{{ site.title }}</title>
+  {% endif %}
+  <meta name="description" content="{{ page.description | default: page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+  <meta name="author" content="{{ site.author }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{{ page.title | default: site.title }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  {% if page.image %}<meta property="og:image" content="{{ page.image | absolute_url }}">{% endif %}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32.png' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  {% if page.url == "/" %}
+  <script>
+    try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('logo-anim'); } catch (e) {}
+  </script>
+  {% endif %}
+</head>
+<body>
+  {% include header.html %}
+  <main id="content">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+  <script>
+    // Header drop-downs: open on click/tap as well as on hover.
+    (function () {
+      var drops = document.querySelectorAll('.dropdown');
+      function closeAll(except) {
+        drops.forEach(function (d) {
+          if (d !== except) { d.classList.remove('open'); d.querySelector('button').setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      drops.forEach(function (d) {
+        var btn = d.querySelector('button');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var open = !d.classList.contains('open');
+          closeAll(d);
+          d.classList.toggle('open', open);
+          btn.setAttribute('aria-expanded', String(open));
+        });
+      });
+      document.addEventListener('click', function () { closeAll(null); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(null); });
+    })();
+
+    // Home page: as you scroll, the big shield glides into the header and
+    // becomes the small header logo. Skipped when "reduce motion" is on.
+    (function () {
+      var root = document.documentElement;
+      var hero = document.querySelector('.hero-logo');
+      var logo = document.querySelector('.site-logo');
+      if (!hero || !logo || !root.classList.contains('logo-anim')) return;
+      var CIRCLE = 880 / 1092;   // share of the hero image taken by the round badge
+      var start = null, queued = false;
+      function clamp(v) { return Math.max(0, Math.min(1, v)); }
+      function measure() {
+        hero.style.transform = '';
+        var r = hero.getBoundingClientRect();
+        start = { x: r.left + r.width / 2, y: r.top + window.scrollY + r.height / 2, w: r.width };
+        update();
+      }
+      function update() {
+        queued = false;
+        if (!start || !start.w) return;
+        var y = window.scrollY, t = logo.getBoundingClientRect();
+        var tx = t.left + t.width / 2, ty = t.top + t.height / 2;
+        var dist = Math.max(1, start.y - ty);            // scroll needed to bring the shield up to the header
+        var p = clamp(y / dist);
+        var e = 1 - (1 - p) * (1 - p);                    // gentle ease-out
+        var scale = 1 + (t.width / (start.w * CIRCLE) - 1) * e;
+        var dx = (tx - start.x) * e;                      // glide sideways to the logo's spot
+        var dy = (start.y + (ty - start.y) * e) - (start.y - y);   // and up to the header line
+        hero.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + scale + ')';
+        var fade = clamp((p - 0.9) / 0.1);                // swap only once it is in place
+        hero.style.opacity = String(1 - fade);
+        hero.style.visibility = fade >= 1 ? 'hidden' : '';
+        logo.style.opacity = String(fade);
+      }
+      function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', function () { requestAnimationFrame(measure); });
+      if (hero.complete) measure(); else hero.addEventListener('load', measure);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% assign item = include.item %}
+{% if item.children %}
+<div class="dropdown">
+  <button class="nav-link" type="button" aria-haspopup="true">{{ item.title }} <span class="caret" aria-hidden="true"></span></button>
+  <div class="dropdown-menu">
+    {% for child in item.children %}
+    <a href="{{ child.url | relative_url }}"{% if page.url == child.url %} aria-current="page"{% endif %}>{{ child.title }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<a class="nav-link" href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
+{% endif %}

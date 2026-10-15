@@ -1,0 +1,32 @@
+---
+layout: default
+title: Agenda
+---
+<section class="section">
+  <div class="container narrow">
+    <h1 class="page-title">Events agenda</h1>
+    <p class="lead center">The Event Radar helps you to find events in Switzerland</p>
+    {% assign today = site.time | date: "%Y-%m-%d" %}
+    {% assign upcoming = "" | split: "" %}
+    {% for e in site.data.events %}
+      {% assign d = e.date | date: "%Y-%m-%d" %}
+      {% if d >= today %}{% assign upcoming = upcoming | push: e %}{% endif %}
+    {% endfor %}
+    {% if upcoming.size > 0 %}
+    <ul class="event-list">
+      {% for e in upcoming %}
+      <li>
+        <time datetime="{{ e.date | date: '%Y-%m-%d' }}"><span class="day">{{ e.date | date: "%-d" }}</span> {{ e.date | date: "%b %Y" }}</time>
+        <div>
+          <h3>{% if e.url %}<a href="{{ e.url }}" target="_blank" rel="noopener">{{ e.title }}</a>{% else %}{{ e.title }}{% endif %}</h3>
+          <p class="post-meta">{{ e.location }}{% if e.organiser %} &middot; {{ e.organiser }}{% endif %}</p>
+          {% if e.description %}<p>{{ e.description }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No upcoming events are listed right now. See the <a href="{{ '/calender.html' | relative_url }}">calendar</a> for everything planned.</p>
+    {% endif %}
+  </div>
+</section>

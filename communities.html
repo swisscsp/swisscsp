@@ -1,0 +1,44 @@
+---
+layout: default
+title: Communities
+---
+<section class="section">
+  <div class="container blog-grid">
+    <div>
+      <h1 class="page-title left">Communities</h1>
+      <p class="filter-note" id="filter-note" hidden></p>
+      {% include post-list.html %}
+    </div>
+    {% include categories.html %}
+  </div>
+</section>
+<script>
+  // Category filter: /communities.html#partner shows only "Partner" posts.
+  (function () {
+    var items = document.querySelectorAll('.post-item');
+    var links = document.querySelectorAll('.categories a');
+    var note = document.getElementById('filter-note');
+    function apply() {
+      var cat = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+      var shown = 0, label = '';
+      items.forEach(function (li) {
+        var cats = (li.getAttribute('data-categories') || '').split(' ');
+        var match = !cat || cats.indexOf(cat) !== -1;
+        li.hidden = !match;
+        if (match) shown++;
+      });
+      links.forEach(function (a) {
+        var target = a.hash ? a.hash.slice(1).toLowerCase() : '';
+        var active = target === cat;
+        a.classList.toggle('active', active);
+        if (active) { a.setAttribute('aria-current', 'true'); label = a.textContent; } else { a.removeAttribute('aria-current'); }
+      });
+      if (cat) {
+        note.hidden = false;
+        note.textContent = shown ? 'Showing ' + label + ' (' + shown + ')' : 'No posts in this category yet.';
+      } else { note.hidden = true; }
+    }
+    window.addEventListener('hashchange', apply);
+    apply();
+  })();
+</script>

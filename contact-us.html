@@ -1,0 +1,18 @@
+---
+layout: default
+title: Contact us
+---
+<section class="section">
+  <div class="container two-col">
+    <div>
+      <h1 class="page-title left">Contact us</h1>
+      {% include form.html subject="Contact form" message=true button="Send" %}
+    </div>
+    <div class="contact-info">
+      <h2>We are happy to assist you</h2>
+      <p><strong>Founder:</strong><br>{{ site.founder_name }}</p>
+      <p><a href="{{ site.founder_linkedin }}" target="_blank" rel="noopener">{{ site.founder_linkedin }}</a></p>
+      <h3>{{ site.title }}</h3>
+    </div>
+  </div>
+</section>

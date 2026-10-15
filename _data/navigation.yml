@@ -1,0 +1,25 @@
+# Header menu. "children" become a drop-down.
+left:
+  - title: Home
+    url: /
+  - title: Events
+    children:
+      - title: Agenda
+        url: /agenda.html
+      - title: Calender
+        url: /calender.html
+  - title: For Individuals
+    children:
+      - title: For Individuals Overview
+        url: /for-indviduals-overview.html
+      - title: Communities
+        url: /communities.html
+      - title: Education
+        url: /education.html
+      - title: Agencies
+        url: /agencies-1.html
+right:
+  - title: For Customers
+    url: /for-customers.html
+  - title: For Suppliers
+    url: /for-suppliers.html

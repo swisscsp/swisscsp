@@ -1,0 +1,27 @@
+{% comment %}
+  Form posting to site.form_endpoint (e.g. Formspree).
+  include params: subject, message=true, company=true, newsletter=true, button
+{% endcomment %}
+{% if site.form_endpoint and site.form_endpoint != "" %}
+<form class="form" action="{{ site.form_endpoint }}" method="POST">
+  <input type="hidden" name="_subject" value="{{ include.subject | default: 'Website message' }}">
+  <label>Name<input type="text" name="name" autocomplete="name"></label>
+  <label>E-Mail*<input type="email" name="email" autocomplete="email" required></label>
+  {% if include.company %}
+  <label>Company<input type="text" name="company" autocomplete="organization"></label>
+  <label>Position<input type="text" name="position" autocomplete="organization-title"></label>
+  {% endif %}
+  {% if include.message %}
+  <label>Message<textarea name="message" rows="5"></textarea></label>
+  {% endif %}
+  {% if include.newsletter %}
+  <label class="check"><input type="checkbox" name="newsletter" value="yes"> Sign up for our email list</label>
+  {% endif %}
+  <button class="btn" type="submit">{{ include.button | default: "Send" }}</button>
+</form>
+{% else %}
+<div class="form-fallback">
+  <p>Get in touch with us on LinkedIn.</p>
+  <a class="btn" href="{{ site.linkedin_group }}" target="_blank" rel="noopener">Contact us on LinkedIn</a>
+</div>
+{% endif %}
