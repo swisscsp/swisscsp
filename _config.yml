@@ -7,8 +7,8 @@ lang: en
 
 # For a project site (https://USER.github.io/REPO/) set baseurl to "/REPO".
 # For a user site (USER.github.io) or a custom domain (swisscsp.ch) leave it "".
-url: "https://swisscsp.github.io"
-baseurl: "/swisscsp"
+url: "https://swisscsp.ch"
+baseurl: ""
 
 # Social links
 linkedin_group: https://www.linkedin.com/groups/12791122/
